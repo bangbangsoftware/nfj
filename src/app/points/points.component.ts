@@ -15,58 +15,58 @@ import { Task, TimeLog, Skill } from '../shared';
   providers: [MdUniqueSelectionDispatcher]
 })
 export class PointsComponent implements OnInit {
-  session:SessionService;
+  session: SessionService;
   storyPoints: number;
-  listTasks: Array<boolean>; 
+  listTasks: Array<boolean>;
   newTaskTitle: FormControl;
   newTaskTime: FormControl;
   taskForm: FormGroup;
 
-  constructor(session:SessionService, private router: Router, private fb: FormBuilder){
-     this.session = session;     
-     this.listTasks = Array<boolean>(this.session.project.stories[0].items.length);
-     this.newTaskTitle = new FormControl('', Validators.required);
-     this.newTaskTime = new FormControl('', Validators.required);
-        this.taskForm = this.fb.group({
-            'newTitle': this.newTaskTitle,
-            'newTime': this.newTaskTime,
-        });
+  constructor(session: SessionService, private router: Router, private fb: FormBuilder) {
+    this.session = session;
+    this.listTasks = Array<boolean>(this.session.project.stories[0].items.length);
+    this.newTaskTitle = new FormControl('', Validators.required);
+    this.newTaskTime = new FormControl('', Validators.required);
+    this.taskForm = this.fb.group({
+      'newTitle': this.newTaskTitle,
+      'newTime': this.newTaskTime,
+    });
 
 
   }
 
   ngOnInit() {
-     this.session.isIn();
+    this.session.isIn();
   }
 
-  showTasks(i,e){
-     this.listTasks[i] = true;     
+  showTasks(i, e) {
+    this.listTasks[i] = true;
   }
 
-  addTask(story){
-     const time = new TimeLog(new Date(),this.newTaskTime.value,0,null,"First estimation","");     
-     const times = Array<TimeLog>();     
-     times.push(time);
+  addTask(story) {
+    const time = new TimeLog(new Date(), this.newTaskTime.value, 0, null, 'First estimation', '');
+    const times = Array<TimeLog>();
+    times.push(time);
 
-     const skills = Array<Skill>();
-     const task = new Task(this.newTaskTitle.value,null, null, null,times, skills);
-     story.tasks.push(task);
-     this.newTaskTitle.reset();
+    const skills = Array<Skill>();
+    const task = new Task(this.newTaskTitle.value, null, null, null, times, skills);
+    story.tasks.push(task);
+    this.newTaskTitle.reset();
   }
 
-  removeTask(story,i){
-    story.tasks.splice(i,1);
+  removeTask(story, i) {
+    story.tasks.splice(i, 1);
   }
 
-  edit(i){
-    this.router.navigate(['story/',i,'points']);
+  edit(i) {
+    this.router.navigate(['story/', i, 'points']);
   }
 
-  moveUp(i){
-   //this.session.moveUp(i);
+  moveUp(i) {
+    // this.session.moveUp(i);
   }
 
-  moveDown(i){
-   // this.session.moveDown(i);
+  moveDown(i) {
+    // this.session.moveDown(i);
   }
 }

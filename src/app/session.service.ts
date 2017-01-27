@@ -46,8 +46,8 @@ export class SessionService {
             return true;
         }
         console.log('Session has no db, logging out');
-        this.router.navigate(['login']);
         this.lastLocation = this.location.path();
+        this.router.navigate(['login']);
         return false;
     }
 
