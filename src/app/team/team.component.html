@@ -1,0 +1,45 @@
+<div class="form">
+        <h1>Introduce yourself....</h1>
+    <md-card>
+        <md-card-content>
+            <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <md-input #title autofocus class="title-input" required placeholder="Name" [formControl]="newName" tabindex="0"></md-input>
+                </div>
+                <div>
+                    <label>Role in the team</label>
+                    <select (change)="pickRole($event.target.value)">    
+                            <option selected ></option>
+                            <option *ngFor="let role of roles">{{role.name}}</option>
+                    </select>        
+                </div>
+                 <div>
+                    <md-input class="email-input" required type="email" placeholder="Email" [formControl]="newEmail"></md-input>
+                </div>
+                <md-card-actions align="end">
+                    <button type="button" md-raised-button color="primary" (click)="clearTeam()" >Clear</button>
+                    <button md-raised-button color="primary" type="submit" [disabled]="!teamForm.valid  || !newRole">Join the team</button>
+                </md-card-actions>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>
+
+<div class="card-container">
+    <md-card *ngFor="let member of session.team; let c=index">
+        <md-card-title>{{c+1}}. {{member.name}}</md-card-title>
+        <div>
+            {{member.role.name}}
+        </div>
+        <a href="mailto:{{member.email}}">
+            {{member.email}}
+        </a>
+        <br>
+        <md-card-actions align="end">
+            <button md-button (click)="editMember(c)" color="primary">EDIT</button>
+            <button md-button (click)="removeMember(c)" color="primary">DELETE</button>
+        </md-card-actions>
+    </md-card>
+</div>
+
+

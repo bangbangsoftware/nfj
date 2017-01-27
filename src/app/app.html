@@ -1,0 +1,103 @@
+<md-sidenav-layout fullscreen>
+
+    <md-sidenav class="primary" #sidenav (open)="createbut.focus()" >
+        <md-nav-list >
+              <button md-button #teambut (click)="team(sidenav)" >
+                <div class="md-list-item">
+                    <md-icon md-list-icon="" class="material-icons" aria-label="assignment ind">assignment ind</md-icon> 
+                    <div class="md-list-text">
+                        <span md-line>1. Team</span>
+                    </div>
+                </div>
+            </button>
+              <button md-button #dodbut (click)="create(sidenav)" >
+                <div class="md-list-item">
+                    <div class="md-list-text">
+                        <span md-line>2. Definition of done</span>
+                    </div>
+                </div>
+            </button>
+            <button md-button #createbut (click)="create(sidenav)" >
+                <div class="md-list-item">
+                    <div class="md-list-text">
+                        <span md-line>3. Create Stories</span>
+                    </div>
+                </div>
+            </button>
+             <button md-button #backlog (click)="points(sidenav)" md-list-item="" role="listitem" class="md-1-line">
+                <div class="md-list-item">
+                    <div class="md-list-text">
+                        <span class="meeting" md-line>4. Backlog Refinement</span>
+                    </div>
+                </div>
+            </button>
+                <button md-button #sprintbut (click)="create(sidenav)" >
+                <div class="md-list-item">
+                    <div class="md-list-text">
+                        <span class="meeting" md-line>5. Sprint Planning</span>
+                    </div>
+                </div>
+            </button>
+                 <button md-button #retrobut (click)="create(sidenav)" >
+                <div class="md-list-item">
+                    <div class="md-list-text">
+                        <span class="meeting" md-line>6. Sprint retrospective</span>
+                    </div>
+                </div>
+            </button>
+                  <button md-button #standupbut (click)="create(sidenav)" >
+                <div class="md-list-item">
+                    <div class="md-list-text">
+                        <span class="meeting" md-line>Stand up</span>
+                    </div>
+                </div>
+            </button>
+               <button md-button #releasebut (click)="create(sidenav)" >
+                <div class="md-list-item">
+                    <div class="md-list-text">
+                        <span md-line>Release Planning</span>
+                    </div>
+                </div>
+            </button>
+                <button md-button #burndownbut (click)="create(sidenav)" >
+                <div class="md-list-item">
+                    <div class="md-list-text">
+                        <span md-line>Burn down</span>
+                    </div>
+                </div>
+            </button>
+       </md-nav-list>
+    </md-sidenav>
+    <!--
+    <md-sidenav #sidenav>
+        <md-nav-list>
+            <md-button class="side-menu">
+                <span md-line> Stories</span>
+                <div md-line class="secondary">Intital creation of stories</div>
+            </md-button>
+            <a [routerLink]="['/about', 'Hello world']" md-list-item>
+                <md-icon md-list-icon></md-icon>
+                <span md-line>About</span>
+            </a>
+        </md-nav-list>
+    </md-sidenav>
+    -->
+    <md-toolbar color="primary">
+        <md-icon (click)="sidenav.open()" >menu</md-icon>
+        <span>{{session.title}}</span> &nbsp;
+        <span class="demo-fill-remaining"></span>
+        <md-icon (click)="logout()" >cancel</md-icon>
+        <!--
+  <div>
+    <a *ngIf="loggedIn()" [routerLink]="['/profile']">Profile</a>&nbsp;
+    <a href="#" *ngIf="!loggedIn()" (click)="login()">Login</a>
+    <a href="#" *ngIf="loggedIn()" (click)="logout()">Logout</a>
+  </div>  
+  -->
+    </md-toolbar>
+
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+
+</md-sidenav-layout>

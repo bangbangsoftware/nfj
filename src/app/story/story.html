@@ -1,0 +1,86 @@
+<div class="form">
+    <md-card>
+        <md-card-content>
+            <form [formGroup]="storyForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <md-input #title autofocus class="title-input" required placeholder="Story Title"
+                        [formControl]="newTitle" tabindex="0"></md-input>
+                     <select>    
+                            <option selected ></option>
+                            <option *ngFor="let type of storyTypes">{{type}}</option>
+                    </select>        
+                 </div>
+                <div>Story Description
+                    <md-input class="desc-input" required placeholder="As" [formControl]="newDescriptionAs"></md-input>
+                    <md-input class="desc-input" required placeholder="I want" [formControl]="newDescriptionWant"></md-input>
+                    <md-input class="desc-input" required placeholder="so that" [formControl]="newDescriptionThat"></md-input>
+                </div>
+
+                <label *ngIf="arcs && acs.length > 0">Acceptance Criteria <span *ngIf="needAcs">This story need acceptance criteria</span>
+                </label>
+                <div>
+                    <div *ngFor="let ac of acs; let i=index">{{i+1}}. {{ac}}
+                        <button type="button" (click)="removeCriteria(i)" md-mini-fab>
+                            <md-icon class="md-24">-</md-icon>
+                        </button>
+                    </div>
+                    <div>
+                        <md-input #acceptance id="newAC" (keydown)="tab($event)" class="ac-input" (change)="checkAC()"
+                            placeholder="Acceptance Criteria" [formControl]="newAC">
+                        </md-input>
+                        <button type="button" (focus)="buttonFocus()" (click)="addCriteria(newAc)" md-mini-fab><i class="material-icons" md-24>add</i>
+                        </button>
+                    </div>
+                </div>
+                <br>
+                <div class="grid">
+                    <md-grid-list cols="8" rowHeight="25px" gutterSize="8px">
+                        <md-grid-tile *ngFor="let colour of colours; let c=index" (click)="selectColour(c)"
+                            [ngClass]="{'selected': c===selectedColour,'unselected': c!==selectedColour}"
+                            class="{{coloursClass[c]}}">{{colour}}</md-grid-tile>
+                    </md-grid-list>
+                </div>
+                <br>
+                <md-card-actions align="end">
+                    <button type="button" md-raised-button color="primary" (click)="clearStory()">Clear Story</button>
+                    <button md-raised-button color="primary" type="submit" [disabled]="!storyForm.valid || (acs.length === 0 && newAC.value.length === 0)">Add Story</button>
+                </md-card-actions>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>
+<div class="card-container">
+    <div>
+        <label>List</label>
+        <select (change)="listID = listNo">    
+           <option *ngFor="let list of session.project.stories; let listNo=index">{{list.name}}</option>
+        </select>
+    </div>
+</div>
+<div class="card-container">
+    <md-card (click)="editStory(story)" class="{{story.colour}}" *ngFor="let story of session.project.stories[listID].items.slice().reverse(); let c=index">
+        <md-card-title>{{session.project.stories[listID].items.length-c}}. {{story.title}}</md-card-title>
+        <div>
+            As {{story.descriptionAs}}, I want {{story.descriptionWant}}, so that {{story.descriptionThat}}
+        </div>
+        <br>
+        <md-card-content *ngFor="let ac of story.acs; let i=index">
+            <i>{{i+1}}. {{ac.name}}</i>
+        </md-card-content>
+        <md-card-actions align="end">
+            <button md-button (click)="editStory(story)" color="primary">EDIT</button>
+            <button md-button (click)="removeStory(story)" color="primary">DELETE</button>
+            <button md-button (click)="breakStory(story)" color="primary">BREAK DOWN</button>
+        </md-card-actions>
+    </md-card>
+</div>
+<!--<div *ngIf="!myForm.valid && myForm.dirty">Form is invalid</div>
+<div *ngIf="!newStory.valid && newStory.dirty">newStory is invalid</div>
+
+<md-progress-circle mode="determinate" value="79"></md-progress-circle>
+<md-progress-circle mode="indeterminate"></md-progress-circle>
+<md-spinner></md-spinner>
+
+<md-progress-circle mode="indeterminate" color="primary"></md-progress-circle>
+<md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+<md-progress-circle mode="indeterminate" color="warn"></md-progress-circle>-->

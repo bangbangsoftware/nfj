@@ -1,0 +1,8 @@
+<p>
+<md-list>
+  <md-list-item *ngFor="let story of session.getStories(); let i=index">
+    <h3 (click)="up(i)"   md-line> /\ {{i+1}}.{{story.title}} </h3>
+    <p  (click)="down(i)" md-line> \/ {{story.description}} </p>
+  </md-list-item>
+</md-list>
+</p>

@@ -1,0 +1,110 @@
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.secondary {
+    color: rgba(0, 0, 0, 0.54);
+}
+[md-fab] {
+    position: absolute;
+    right: 3%;
+    top: 34px;
+    z-index: 1;
+}
+md-sidenav-layout {
+    background: rgba(0, 0, 0, 0.03);
+}
+.title-input {
+    margin: 8px 0;
+    width: 50%;
+}
+.desc-input {
+    margin: 8px 0;
+    width: 100%;
+}
+.ac-input {
+    margin: 8px 0;
+    width: 80%;
+}
+.yellow {
+    background-color: yellow;
+}
+.red {
+    background-color: red;
+}
+.blue {
+    background-color: blue;
+}
+.orange {
+    background-color: orange;
+}
+.black {
+    background-color: black;
+    color: green;
+}
+.green {
+    background-color: green;
+}
+.white {
+    background-color: white;
+}
+.brown {
+    background-color: brown;
+}
+.unselected {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.selected {
+    border-style: solid;
+    border-width: 2px;
+}
+.
+.yellow-title {
+    background-color: yellow;
+    border-style: solid;
+    border-width: 1px;
+}
+.red-title {
+    background-color: lightred;
+}
+.blue-title {
+    background-color: blue;
+}
+.orange-title {
+    background-color: orange;
+}
+.black-title {
+    background-color: black;
+    color: green;
+}
+.green-title {
+    background-color: green;
+}
+.white-title {
+    background-color: white;
+}
+.brown-title {
+    background-color: brown;
+}
+.grid {
+    margin: 0%;
+}
+md-radio-button,
+md-checkbox {
+    margin: 16px 8px;
+}
+.form {
+    display: flex;
+}
+.form md-card {
+    flex-grow: 1;
+}
+md-card {
+    width: 400px;
+    box-sizing: border-box;
+    margin: 16px;
+}
+.card-container {
+    display: flex;
+    flex-flow: row wrap;
+}

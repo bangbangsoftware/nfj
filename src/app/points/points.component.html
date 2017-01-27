@@ -1,0 +1,47 @@
+<div class="card-container">
+    <md-card class="{{story.colour}}" *ngFor="let story of session.getStories(); let i=index">
+        <md-card-title>{{i+1}}.{{story.title}}</md-card-title>
+        <div>{{story.description}}</div>
+        <md-button-toggle-group name="storyPoints" (click)="showTasks(i,$event)">
+            <md-button-toggle>1/2</md-button-toggle>
+            <md-button-toggle>1</md-button-toggle>
+            <md-button-toggle>3</md-button-toggle>
+            <md-button-toggle>5</md-button-toggle>
+            <md-button-toggle>8</md-button-toggle>
+            <md-button-toggle>13</md-button-toggle>
+            <md-button-toggle>20</md-button-toggle>
+            <md-button-toggle>40</md-button-toggle>
+            <md-button-toggle>100</md-button-toggle>
+            <md-button-toggle>E</md-button-toggle>
+            <md-button-toggle>?</md-button-toggle>
+        </md-button-toggle-group>
+        <div *ngIf="listTasks[i]">
+            <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+                    <p md-line *ngFor="let task of story.tasks; let i=index">{{i+1}}. {{task.title}}
+                <button type="button" (click)="removeTask(story,i)" md-mini-fab>
+                <md-icon class="md-24">-</md-icon>
+            </button>
+            </p>
+            <p md-line>
+                <md-input #tasks autofocus class="ac-input" [formControl]="newTaskTitle" placeholder="Task"></md-input>
+                <md-input class="ac-input" [formControl]="newTaskTime" placeholder="Time"></md-input>
+                <button type="button" (click)="addTask(story)" md-mini-fab><i class="material-icons" md-24>add</i>
+            </button>
+            </p>
+            </form>
+        </div>
+
+        <md-card-actions align="end">
+            <button md-button (click)="edit(i)" color="primary">EDIT</button>
+            <button *ngIf="i > 0" (click)="moveUp(i)" md-button>
+        <md-icon md-list-icon="" class="material-icons" aria-label="assignment ind">vertical_align_top</md-icon>
+    </button>
+            <button *ngIf="i === 0" md-button>
+        <md-icon md-list-icon="" class="material-icons" aria-label="assignment ind">top</md-icon>
+    </button>
+            <button *ngIf="i < session.stories.length-1" (click)="moveDown(i)" md-button>
+        <md-icon md-list-icon="" class="material-icons" aria-label="assignment ind">vertical_align_bottom</md-icon>
+    </button>
+        </md-card-actions>
+    </md-card>
+</div>

@@ -1,0 +1,19 @@
+<div class="form">
+        <h1>Login please</h1>
+        <h3>{{session.message}}</h3>
+    <md-card>
+        <md-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <md-input #name autofocus class="name-input" required placeholder="Name" [formControl]="newName" tabindex="0"></md-input>
+                </div>
+                <div>
+                    <md-input #pw autofocus type="password" class="pw-input" required placeholder="Password" [formControl]="newPw" tabindex="0"></md-input>
+                </div>
+                <md-card-actions align="end">
+                    <button type="button" md-raised-button color="primary" (click)="login()" >Login</button>
+                </md-card-actions>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>
