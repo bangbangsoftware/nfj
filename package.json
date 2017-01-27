@@ -1,0 +1,14 @@
+{
+  "name": "nfj",
+  "version": "1.0.0",
+  "description": "Not fucking Jira",
+  "main": "src/app/app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mick Carter <cick.marter@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "angular-cli": "^1.0.0-beta.26"
+  }
+}
