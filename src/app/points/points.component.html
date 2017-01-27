@@ -1,4 +1,4 @@
-<div class="card-container">
+<div *ngIf="session.project" class="card-container">
     <md-card class="{{story.colour}}" *ngFor="let story of session.project.stories; let i=index">
         <md-card-title>{{i+1}}.{{story.title}}</md-card-title>
         <div>{{story.description}}</div>
