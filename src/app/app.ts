@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from './session.service';
+import { Direction } from './direction';
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.html',
     styleUrls: ['app.css'],
-    providers: [SessionService]
+    providers: [SessionService, Direction]
 })
 export class AppComponent {
     title: string = "Who are you?";

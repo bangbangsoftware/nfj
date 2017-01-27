@@ -9,6 +9,10 @@
                             <option selected ></option>
                             <option *ngFor="let type of storyTypes">{{type}}</option>
                     </select>        
+                      <select>    
+                            <option selected ></option>
+                            <option *ngFor="let impact of storyImpact">{{type}}</option>
+                    </select>        
                  </div>
                 <div>Story Description
                     <md-input class="desc-input" required placeholder="As" [formControl]="newDescriptionAs"></md-input>

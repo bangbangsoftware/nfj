@@ -6,13 +6,6 @@
                 <div>
                     <md-input #title autofocus class="title-input" required placeholder="Name" [formControl]="newName" tabindex="0"></md-input>
                 </div>
-                <div>
-                    <label>Role in the team</label>
-                    <select (change)="pickRole($event.target.value)">    
-                            <option selected ></option>
-                            <option *ngFor="let role of roles">{{role.name}}</option>
-                    </select>        
-                </div>
                  <div>
                     <md-input class="email-input" required type="email" placeholder="Email" [formControl]="newEmail"></md-input>
                 </div>

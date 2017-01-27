@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Story } from './story';
 
 
 describe('StoryTest', () => {
 
-    it('Should...', () =>{
+    it('Should...', () => {
+        console.log('Started');
         let fixture = TestBed.createComponent(Story);
         fixture.componentInstance.newTitle.setValue('what');
         fixture.detectChanges();
