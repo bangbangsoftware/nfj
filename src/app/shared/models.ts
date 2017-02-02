@@ -9,12 +9,8 @@ export class Project {
 }
 
 export class Position {
-    constructor(public role: Role,
+    constructor(public role: string,
         public member: Member) { }
-}
-
-export class Role {
-    constructor(public name: string) { }
 }
 
 export class StoryGroup {
@@ -22,21 +18,19 @@ export class StoryGroup {
         public items: Array<StoryItem>) { }
 }
 
-export class Impact {
+export class Tag {
     constructor(public name: string) { }
 }
 
 export class StoryItem {
     constructor(public title: string,
-        public type: string,
         public colour: string,
         public descriptionAs: string,
         public descriptionWant: string,
         public descriptionThat: string,
         public points: number,
         public acs: Array<Acceptance>,
-        public tasks: Array<Task>,
-        public impact: Impact) { }
+        public tags: Array<Tag>) { }
 }
 
 export class Acceptance {
@@ -100,10 +94,6 @@ export class Deployment { // Linked to a script to deploy somehow
     constructor(public name: string) { }
 }
 
-export class Consequence {
-    constructor(public name: string) { }
-}
-
 export class WorkAround {
     constructor(public name: string, public description: string) { }
 }
@@ -126,7 +116,7 @@ export class Bug {
         public title: string,
         public description: string,
         public assigned: Member,
-        public consequence: Consequence,
+        public consequence: string,
         public workaround: WorkAround,
         public reproduce: Reproduce,
         public state: BugState) { }

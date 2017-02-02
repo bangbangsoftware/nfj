@@ -9,9 +9,7 @@ import {
   StoryGroup,
   StoryItem,
   Acceptance,
-  Role,
-  Consequence,
-  Impact
+  Tag
 } from './shared/models';
 
 const PouchDB = require('pouchdb');
@@ -22,12 +20,12 @@ export class SessionService {
   public userDB;
   public projectDB;
 
-  public project: Project;
   public user: Member;
   public title: string;
   public lastLocation: string;
   public message: string;
-  public defaults: any;
+  public defaults = this.getDefaults();
+  public project = this.getFakeProject();
 
   private titles = {
     '/points': 'Story Points',
@@ -199,76 +197,91 @@ export class SessionService {
     return db.put(proj._id, proj);
   }
 
+  getColours() {
+    return ['yellow', 'red', 'blue', 'orange', 'black', 'green', 'white', 'brown'];
+
+  }
+  getColoursClasses() {
+    return ['yellow', 'red', 'blue', 'orange', 'black', 'green', 'white', 'brown'];
+  }
+
   getDefaults() {
     return {
       _id: 'defaults',
       roles: this.getRoles(),
-      impacts: this.getImpacts(),
-      consequences: this.getConsequences()
+      tags: this.getTags(),
+      consequences: this.getConsequences(),
+      colours: this.getColours(),
+      colourClasses: this.getColoursClasses()
     };
   }
 
   getConsequences() {
-    const consequences = new Array<Consequence>();
-    consequences.push(new Consequence('Unusable'));
-    consequences.push(new Consequence('Unstable'));
-    consequences.push(new Consequence('Cosmetic'));
+    const consequences = new Array<string>();
+    consequences.push('Unusable');
+    consequences.push('Unstable');
+    consequences.push('Cosmetic');
     return consequences;
   }
 
-  getImpacts() {
-    const impacts = new Array<Impact>();
-    impacts.push(new Impact('MVP'));
-    impacts.push(new Impact('USP'));
-    impacts.push(new Impact('Quicker'));
-    impacts.push(new Impact('New feature'));
-    return impacts;
+  getTags() {
+    const tags = new Array<string>();
+    tags.push('Feature');
+    tags.push('Technical Debt');
+    tags.push('Missing Functionality');
+    tags.push('MVP');
+    tags.push('USP');
+    tags.push('Quicker');
+    tags.push('New feature');
+    return tags;
   }
 
   getRoles() {
-    const roles = new Array<Role>();
-    roles.push(new Role('Product Owner'));
-    roles.push(new Role('Scrum Master'));
-    roles.push(new Role('Tester'));
-    roles.push(new Role('Front end dev'));
-    roles.push(new Role('Back end dev'));
-    roles.push(new Role('UX'));
-    roles.push(new Role('Trainer'));
-    roles.push(new Role('Operation'));
+    const roles = new Array<string>();
+    roles.push('Product Owner');
+    roles.push('Scrum Master');
+    roles.push('Tester');
+    roles.push('Front end dev');
+    roles.push('Back end dev');
+    roles.push('UX');
+    roles.push('Trainer');
+    roles.push('Operation');
     return roles;
   }
 
-  testingSetup() {
-    const skills = new Array<Skill>();
-    const fred = new Member('0', 'Fred', 'cick.marter@gmail.com', skills, 0);
-
-    const backlogStories = new Array<StoryItem>();
-    backlogStories.push(new StoryItem('Write a story', 'general', 'yellow', 'a po', 'to be able to input a story',
+  getFakeProject() {
+     const backlogStories = new Array<StoryItem>();
+    backlogStories.push(new StoryItem('Write a story', 'yellow', 'a po', 'to be able to input a story',
       'the project can get features', -1, [new Acceptance('Should be able to do list of acceptance criteria')],
-      [], new Impact('MVP')));
-    backlogStories.push(new StoryItem('Order a story', 'general', 'yellow', 'a po',
+      [new Tag('MVP')]));
+    backlogStories.push(new StoryItem('Order a story', 'yellow', 'a po',
       'to be able to move a story up and down the backlog',
       'features are in correct order', -1, [new Acceptance('This backlog should keep its order')],
-      [], new Impact('MVP')));
-    backlogStories.push(new StoryItem('Assign Points', 'general', 'yellow', 'the team', 'to be able to assign points to a story',
+      [new Tag('MVP')]));
+    backlogStories.push(new StoryItem('Assign Points', 'yellow', 'the team', 'to be able to assign points to a story',
       'velocity can be estimated', -1, [new Acceptance('Story should keep their points')],
-      [], new Impact('MVP')));
-    backlogStories.push(new StoryItem('Write tasks', 'general', 'yellow', 'a scrum master', 'to be able to add sub tasks to a story',
+      [new Tag('MVP')]));
+    backlogStories.push(new StoryItem('Write tasks', 'yellow', 'a scrum master', 'to be able to add sub tasks to a story',
       'sprints can be planned', -1, [new Acceptance('The sub tasks should be associated with the story')],
-      [], new Impact('MVP')));
-    backlogStories.push(new StoryItem('Create team', 'general', 'yellow', 'the team', 'to be able to enter team members',
+      [new Tag('MVP')]));
+    backlogStories.push(new StoryItem('Create team', 'yellow', 'the team', 'to be able to enter team members',
       'members are up to date', -1, [new Acceptance('a team member should have a role - dev,po or scrum master')],
-      [], new Impact('MVP')));
-    backlogStories.push(new StoryItem('Write defintion of done', 'general', 'yellow', 'the team',
+      [new Tag('MVP')]));
+    backlogStories.push(new StoryItem('Write defintion of done', 'yellow', 'the team',
       'to be able to enter dod',
       'we can have confidence the story has now fully shipable artifacts', -1,
-      [new Acceptance('This be broken down for the lifecycle of a feature')], [], new Impact('MVP')));
+      [new Acceptance('This be broken down for the lifecycle of a feature')], [new Tag('MVP')]));
 
     const backlog = new StoryGroup('backlog', backlogStories);
     const stories = new Array<StoryGroup>();
     stories.push(backlog);
+    return new Project('0', 'Tardigrade', 'The best way to manage agile development', stories, null);
+  }
 
-    const project = new Project('0', 'Tardigrade', 'The best way to manage agile development', stories, null);
+
+  testingSetup() {
+    const skills = new Array<Skill>();
+    const fred = new Member('0', 'Fred', 'cick.marter@gmail.com', skills, 0);
 
     return {
       user: {
@@ -276,7 +289,7 @@ export class SessionService {
         skils: fred.skills,
         currentProjectID: fred.currentProjectID
       },
-      project
+      project: this.getFakeProject()
     };
   }
 }

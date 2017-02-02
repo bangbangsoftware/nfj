@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { StoryItem, Acceptance, Impact } from '../shared';
+import { StoryItem, Acceptance, Tag } from '../shared';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { SessionService } from '../session.service';
@@ -18,28 +18,24 @@ export class Story implements OnInit {
   fb: FormBuilder;
   storyForm: FormGroup;
   newTitle: FormControl;
-  newImpact: FormControl;
-  newType: FormControl;
+  newTag: FormControl;
   newDescriptionAs: FormControl;
   newDescriptionWant: FormControl;
   newDescriptionThat: FormControl;
   newColour: FormControl;
   newAC: FormControl;
   acs: Array<string>;
+  tags: Array<string>;
   needAcs: boolean;
   storyID: number;
   back: string;
   ac;
-  colours: Array<string> = ['yellow', 'red', 'blue', 'orange', 'black', 'green', 'white', 'brown'];
-  coloursClass: Array<string> = ['yellow', 'red', 'blue', 'orange', 'black', 'green', 'white', 'brown'];
-  storyTypes: Array<string> = ['feature', 'technical debt', 'missing functionality'];
-  selectedColour = 6;
+ selectedColour = 6;
 
   constructor(fb: FormBuilder, private session: SessionService, private route: ActivatedRoute, private router: Router) {
     this.fb = fb;
     this.newTitle = new FormControl('', Validators.required);
-    this.newImpact = new FormControl('', Validators.required);
-    this.newType = new FormControl('', Validators.required);
+    this.newTag = new FormControl('', Validators.required);
     this.newDescriptionAs = new FormControl('', Validators.required);
     this.newDescriptionWant = new FormControl('', Validators.required);
     this.newDescriptionThat = new FormControl('', Validators.required);
@@ -49,7 +45,7 @@ export class Story implements OnInit {
     this.needAcs = false;
     this.storyForm = this.fb.group({
       'newTitle': this.newTitle,
-      'newImpact': this.newImpact,
+      'newTag': this.newTag,
       'newDescriptionAs': this.newDescriptionAs,
       'newDescriptionWant': this.newDescriptionWant,
       'newDescriptionThat': this.newDescriptionThat,
@@ -71,7 +67,7 @@ export class Story implements OnInit {
 
   selectColour(c) {
     this.selectedColour = c;
-    this.newColour.setValue(this.coloursClass[c]);
+    this.newColour.setValue(this.session.defaults.coloursClasses[c]);
   }
 
   buttonFocus() {
@@ -85,12 +81,12 @@ export class Story implements OnInit {
 
   editStory(item: StoryItem) {
     this.newTitle.setValue(item.title);
-    this.newImpact.setValue(item.impact.name);
+    this.newTag.setValue(item.tags[0].name);
     this.newDescriptionAs.setValue(item.descriptionAs);
     this.newDescriptionWant.setValue(item.descriptionWant);
     this.newDescriptionThat.setValue(item.descriptionThat);
     this.newColour.setValue(item.colour);
-    this.selectedColour = this.colours.indexOf(item.colour);
+    this.selectedColour = this.session.defaults.colours.indexOf(item.colour);
     this.newAC.setValue('');
     this.acs = item.acs.map(a => a.name);
     this.needAcs = false;
@@ -108,12 +104,11 @@ export class Story implements OnInit {
       this.needAcs = true;
     } else if (this.storyForm.valid) {
       const acceptances = this.acs.map(a => new Acceptance(a));
-      const impact = new Impact(this.newImpact.value);
+      const tag = new Tag(this.newTag.value);
       this.session.project.stories[this.listID].items.push(
-        new StoryItem(this.newTitle.value, this.newType.value, this.newColour.value,
+        new StoryItem(this.newTitle.value, this.newColour.value,
           this.newDescriptionAs.value, this.newDescriptionWant.value,
-          this.newDescriptionThat.value, -1, acceptances, [],
-          impact));
+          this.newDescriptionThat.value, -1, acceptances, [tag]));
       this.clearStory();
       if (this.back) {
         this.router.navigate([this.back]);
@@ -144,5 +139,24 @@ export class Story implements OnInit {
       this.ac = e.target.parentNode.firstElementChild;
     }
   }
+
+  removeTag(i): void {
+    this.tags.splice(i, 1);
+  }
+
+  addTag(): void {
+    if (this.newTag.value) {
+      this.tags.push(this.newTag.value);
+      this.newTag.reset();
+    }
+  }
+
+  tagTab(e) {
+    if (e.keyCode === 9) { // press tab
+      this.addTag();
+//      this.tag = e.target.parentNode.firstElementChild;
+    }
+  }
+
 
 }

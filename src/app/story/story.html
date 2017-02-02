@@ -5,21 +5,35 @@
                 <div>
                     <md-input #title autofocus class="title-input" required placeholder="Story Title"
                         [formControl]="newTitle" tabindex="0"></md-input>
-                     <select>    
-                            <option selected ></option>
-                            <option *ngFor="let type of storyTypes">{{type}}</option>
-                    </select>        
-                      <select>    
-                            <option selected ></option>
-                            <option *ngFor="let impact of storyImpact">{{type}}</option>
-                    </select>        
-                 </div>
+                </div>
                 <div>Story Description
                     <md-input class="desc-input" required placeholder="As" [formControl]="newDescriptionAs"></md-input>
                     <md-input class="desc-input" required placeholder="I want" [formControl]="newDescriptionWant"></md-input>
                     <md-input class="desc-input" required placeholder="so that" [formControl]="newDescriptionThat"></md-input>
                 </div>
 
+                <label *ngIf="tags && tags.length > 0">Tags</label>
+                <div>
+                    <div *ngFor="let tag of tags; let ti=index">{{it+1}}. {{tag}}
+                        <button type="button" (click)="removeTag(it)" md-mini-fab>
+                            <md-icon class="md-24">-</md-icon>
+                        </button>
+                    </div>
+                    <div>
+                <!-- Tags (used to decribe - impact, type or anything, or maybe impact should be a seperate field?) -->
+                     <md-select>    
+                            <md-option selected ></md-option>
+                            <md-option *ngFor="let tName of session.defaults.tags">{{tName}}</md-option>
+                    </md-select>        
+                    <!--
+                        <md-input #acceptanceid="newTag" (keydown)="tab($event)" class="ac-input" placeholder="Tag" [formControl]="newTag">
+                        </md-input>
+                        -->
+                        <button type="button" (click)="addTag(newTag)" md-mini-fab><i class="material-icons" md-24>add</i>
+                        </button>
+                    </div>
+                </div>
+ 
                 <label *ngIf="arcs && acs.length > 0">Acceptance Criteria <span *ngIf="needAcs">This story need acceptance criteria</span>
                 </label>
                 <div>
@@ -56,9 +70,9 @@
 <div class="card-container">
     <div>
         <label>List</label>
-        <select (change)="listID = listNo">    
-           <option *ngFor="let list of session.project.stories; let listNo=index">{{list.name}}</option>
-        </select>
+        <md-select (change)="listID = listNo">    
+           <md-option *ngFor="let list of session.project.stories; let listNo=index">{{list.name}}</md-option>
+        </md-select>
     </div>
 </div>
 <div class="card-container">
